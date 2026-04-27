@@ -1,0 +1,13 @@
+--  5. Write SQL statements for the following queries:
+
+-- TODOS:
+-- [1] List the names and membership levels of members who have borrwed at least one book in each of the past 6 months.
+-- [2] Find the top three Gold Members who have borrowed the largest number of distinct books in the past year.
+-- [3] List the Book ID and title of books that have been borrowed fewer than 3 times in total, including books that were never borrowed.
+-- [4] For each publisher, return the publisher name and the total number of books borrowed from that publisher in the past year.
+-- [5] Find the author(s) whose books have been borrowed the greatest total number of times across the entire library
+-- [6] List the names of employees who are also members and who have borrowed at least one book they did not help process or manage.
+-- [7] Find the names of receptionists who have resolved at least 5 inquiries and whose average inquiry rating is greater than or equal to 4.5.
+-- [8] List the names and contact information of Silver Members who have: Borrowed books in at least 10 different months, and Borrowed at least 20 books in total.
+-- [9] Find the books that were borrowed at least once in every month of the past year.
+-- [10] For each trainer (Library Supervisor), return the trainer's name and the number of receptionists they have trained who later resolved at least 10 inquiries.
