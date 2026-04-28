@@ -109,21 +109,33 @@ CREATE TABLE GOLD (
         ON DELETE CASCADE
 );
 
--- 11. GUEST_LOG
-CREATE TABLE GUEST_LOG (
+-- 11. GUEST
+CREATE TABLE GUEST (
     GuestID         CHAR(10)        NOT NULL,
     CardID          CHAR(10)        NOT NULL,
     GuestName       VARCHAR(100)    NOT NULL,
     GuestAddress    VARCHAR(255),
     GuestContact    VARCHAR(15),
-    VisitDate       DATE            NOT NULL,
-    CONSTRAINT pk_guest_log         PRIMARY KEY (GuestID, CardID),
-    CONSTRAINT fk_guestlog_gold     FOREIGN KEY (CardID)
+    CONSTRAINT pk_guest         PRIMARY KEY (GuestID, CardID),
+    CONSTRAINT fk_guest_gold    FOREIGN KEY (CardID)
         REFERENCES GOLD(CardID)
         ON DELETE CASCADE
 );
 
--- 12. PROMOTION
+
+-- 12. GUEST_LOG
+CREATE TABLE GUEST_LOG (
+    LogID       CHAR(10)    NOT NULL,
+    GuestID     CHAR(10)    NOT NULL,
+    CardID      CHAR(10)    NOT NULL,
+    VisitDate   DATE        NOT NULL,
+    CONSTRAINT pk_guest_log         PRIMARY KEY (LogID),
+    CONSTRAINT fk_guestlog_guest    FOREIGN KEY (GuestID, CardID)
+        REFERENCES GUEST(GuestID, CardID)
+        ON DELETE CASCADE
+);
+
+-- 13. PROMOTION
 CREATE TABLE PROMOTION (
     PromotionCode           CHAR(10)        NOT NULL,
     PromotionDescription    VARCHAR(255)    NOT NULL,
@@ -132,7 +144,7 @@ CREATE TABLE PROMOTION (
     CONSTRAINT pk_promotion PRIMARY KEY (PromotionCode)
 );
 
--- 13. CARD_PROMOTION
+-- 14. CARD_PROMOTION
 CREATE TABLE CARD_PROMOTION (
     CardID          CHAR(10)    NOT NULL,
     PromotionCode   CHAR(10)    NOT NULL,
@@ -146,7 +158,7 @@ CREATE TABLE CARD_PROMOTION (
         ON DELETE CASCADE
 );
 
--- 14. PUBLISHER
+-- 15. PUBLISHER
 CREATE TABLE PUBLISHER (
     PublisherID         CHAR(10)        NOT NULL,
     PublisherName       VARCHAR(100)    NOT NULL,
@@ -156,7 +168,7 @@ CREATE TABLE PUBLISHER (
     CONSTRAINT pk_publisher PRIMARY KEY (PublisherID)
 );
 
--- 15. BOOK
+-- 16. BOOK
 CREATE TABLE BOOK (
     BookID      CHAR(10)        NOT NULL,
     PublisherID CHAR(10)        NOT NULL,
@@ -171,7 +183,7 @@ CREATE TABLE BOOK (
         ON DELETE RESTRICT
 );
 
--- 16. AUTHOR
+-- 17. AUTHOR
 CREATE TABLE AUTHOR (
     AuthorID    CHAR(10)    NOT NULL,
     AuthorFName VARCHAR(50) NOT NULL,
@@ -181,7 +193,7 @@ CREATE TABLE AUTHOR (
     CONSTRAINT pk_author PRIMARY KEY (AuthorID)
 );
 
--- 17. BOOK_AUTHOR
+-- 18. BOOK_AUTHOR
 CREATE TABLE BOOK_AUTHOR (
     BookID      CHAR(10)    NOT NULL,
     AuthorID    CHAR(10)    NOT NULL,
@@ -194,7 +206,7 @@ CREATE TABLE BOOK_AUTHOR (
         ON DELETE CASCADE
 );
 
--- 18. PAYMENT
+-- 19. PAYMENT
 CREATE TABLE PAYMENT (
     PaymentID       CHAR(10)        NOT NULL,
     PaymentAmount   DECIMAL(10,2)   NOT NULL,
@@ -204,7 +216,7 @@ CREATE TABLE PAYMENT (
     CONSTRAINT chk_payment_method   CHECK (PaymentMethod IN ('Cash', 'Debit Card', 'Credit Card'))
 );
 
--- 19. BORROWING
+-- 20. BORROWING
 CREATE TABLE BORROWING (
     BorrowID        CHAR(10)    NOT NULL,
     BookID          CHAR(10)    NOT NULL,
@@ -230,7 +242,7 @@ CREATE TABLE BORROWING (
         ON DELETE RESTRICT
 );
 
--- 20. INQUIRY
+-- 21. INQUIRY
 CREATE TABLE INQUIRY (
     InquiryID           CHAR(10)    NOT NULL,
     MemberID            CHAR(4)     NOT NULL,
@@ -249,13 +261,13 @@ CREATE TABLE INQUIRY (
         ON DELETE RESTRICT
 );
 
--- 21. COMMENT
+-- 22. COMMENT
 CREATE TABLE COMMENT (
     CommentID       CHAR(10)    NOT NULL,
     PersonID        CHAR(4)     NOT NULL,
     BookID          CHAR(10)    NOT NULL,
     CommentTime     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    Rating          INT         NOT NULL,
+    RatingScore     INT         NOT NULL,
     CommentContent  TEXT        NOT NULL,
     CONSTRAINT pk_comment           PRIMARY KEY (CommentID),
     CONSTRAINT chk_comment_rating   CHECK (Rating BETWEEN 1 AND 5),
