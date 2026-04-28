@@ -1,5 +1,5 @@
 -- JUNGLE LIBRARY DATABASE
--- PHASE III: Create Views (Q5)
+-- PHASE III: Create Queries (Q5)
 
 -- [1] List the names and membership levels of members who have borrwed at least one book in each of the past 6 months.
 SELECT P.FName, P.LName, LC.MembershipLevel
